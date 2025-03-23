@@ -6,10 +6,13 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    direction: rtl;
+    font-family: "Rubik", sans-serif;
+    font-weight: 400;
     line-height: 1.6;
     color: #4b5563;
     background-color: #fff;
+    text-align: right;
 }
 
 /* Hero Section */
@@ -31,9 +34,8 @@ body {
 
 h1 {
     font-size: 3.5rem;
-    font-weight: 300;
+    font-weight: 700;
     margin-bottom: 10px;
-    font-family: 'Times New Roman', serif;
     color: #1f2937;
 }
 
@@ -46,7 +48,7 @@ h1 {
 
 .date {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     color: #6b7280;
 }
 
@@ -89,9 +91,8 @@ h1 {
 
 h2 {
     font-size: 2rem;
-    font-weight: 300;
+    font-weight: 500;
     margin-bottom: 20px;
-    font-family: 'Times New Roman', serif;
     color: #1f2937;
 }
 
@@ -125,7 +126,7 @@ h2 {
 }
 
 .upload-icon {
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .upload-hint {
@@ -190,16 +191,16 @@ footer {
     border-top: 1px solid #f3f4f6;
 }
 
-/* Responsive */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
     }
-    
+
     .date {
         font-size: 1.2rem;
     }
-    
+
     .card {
         padding: 30px 20px;
     }
