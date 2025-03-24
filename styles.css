@@ -214,8 +214,10 @@ footer {
   max-width: 1000px;
   padding: 0 16px;
   margin: 20px auto;
-  direction: ltr;            /* Prevents RTL layout from pushing grid to the right */
-  place-items: center;       /* ✅ Centers the entire grid */
+  direction: ltr;
+  justify-content: center;     /* ✅ Ensures grid is centered horizontally */
+  align-items: center;         /* Optional for vertical alignment */
+  text-align: center;
 }
 
 #gallery img {
