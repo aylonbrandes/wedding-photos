@@ -7,14 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessage = document.getElementById('errorMessage');
 
     // Cloudinary configuration
-    const cloudName = 'dx1x5vao3';
-    const uploadPreset = 'weddingphotos';
+    const cloudName = 'dkwxhr5pr';
+    const uploadPreset = 'talandadir';
 
     // Initialize Cloudinary Upload Widget
     const myWidget = cloudinary.createUploadWidget(
         {
-            cloudName: dkwxhr5pr,
-            uploadPreset: talandadir,
+            cloudName: cloudName,
+            uploadPreset: uploadPreset,
             sources: ['local', 'camera'],
             multiple: true,
             maxFiles: 10,
