@@ -206,10 +206,10 @@ footer {
     }
 }
 
-/* === Gallery Grid (Instagram Style) === */
+/* === Gallery Grid (Instagram Style — Always 3 Columns) === */
 #gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Always 3 columns */
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* Force 3 columns always */
     gap: 10px;
     padding: 0 16px;
     max-width: 1000px;
@@ -218,11 +218,12 @@ footer {
 
 #gallery img {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Square tiles */
+    aspect-ratio: 1 / 1; /* Square shape */
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 12px; /* Soft rounded corners */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 #gallery img:hover {
