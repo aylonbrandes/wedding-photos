@@ -26,10 +26,22 @@
     </div>
   </div>
 
-  <!-- Gallery Section (Always Visible) -->
+  <!-- 👩‍❤️‍👨 Couple Photo (Restored) -->
+  <div class="couple-photo" style="text-align: center; margin-top: 30px;">
+    <img
+      src="PHOTO-2025-03-24-16-47-53.jpg"
+      alt="Tal and Adir"
+      style="max-width: 300px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);"
+    />
+  </div>
+
+  <!-- Gallery Section -->
   <section class="gallery-section">
-    <h2 style="text-align: center;">✨ גלריה מהאירוע ✨</h2>
-    <div id="gallery" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px;"></div>
+    <h2 style="text-align: center; margin-top: 40px;">✨ גלריה מהאירוע ✨</h2>
+    <div
+      id="gallery"
+      style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px;"
+    ></div>
   </section>
 
   <!-- Upload Section -->
@@ -40,18 +52,22 @@
       <p>שתפו אותנו בתמונות שלכם מהאירוע 👇</p>
 
       <div class="upload-section" id="uploadSection">
-        <button class="upload-btn" id="uploadBtn">
-          העלאת תמונות
-        </button>
+        <button class="upload-btn" id="uploadBtn">העלאת תמונות</button>
         <p class="upload-hint">ניתן לבחור מספר תמונות במקביל</p>
         <p id="errorMessage" class="error-message"></p>
       </div>
 
-      <div class="success-section" id="successSection" style="display: none;">
+      <div
+        class="success-section"
+        id="successSection"
+        style="display: none; text-align: center;"
+      >
         <div class="success-icon">✓</div>
         <h3>תודה רבה!</h3>
         <p>התמונה שלך הועלתה בהצלחה.</p>
-        <button class="upload-more-btn" id="uploadMoreBtn">העלה תמונות נוספות</button>
+        <button class="upload-more-btn" id="uploadMoreBtn">
+          העלה תמונות נוספות
+        </button>
       </div>
     </div>
   </div>
@@ -65,7 +81,12 @@
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD63Y_5i07PKn49KExO52AUssTyx7k-zmw",
@@ -80,13 +101,14 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Make Firebase available globally
+    // Make Firebase available to script.js
     window.firebaseDB = db;
     window.firebaseCollection = collection;
     window.firebaseAddDoc = addDoc;
     window.firebaseGetDocs = getDocs;
   </script>
 
+  <!-- Your main logic -->
   <script src="script.js"></script>
 </body>
 </html>
