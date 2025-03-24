@@ -206,20 +206,21 @@ footer {
   }
 }
 
-/* === Gallery Grid (Instagram Style — Always 3 Columns) === */
+/* === Gallery Grid (Instagram Style — Always 3 Columns, Centered) === */
 #gallery {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 10px;
   max-width: 1000px;
-  margin: 20px auto;
   padding: 0 16px;
-  direction: ltr; /* fix alignment in RTL pages */
-  justify-content: center; /* center grid inside the section */
+  margin: 20px auto;
+  direction: ltr;            /* Prevents RTL layout from pushing grid to the right */
+  place-items: center;       /* ✅ Centers the entire grid */
 }
 
 #gallery img {
   width: 100%;
+  max-width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 12px;
