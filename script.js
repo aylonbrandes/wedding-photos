@@ -1,10 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Elements
     const uploadBtn = document.getElementById('uploadBtn');
     const uploadSection = document.getElementById('uploadSection');
     const successSection = document.getElementById('successSection');
     const uploadMoreBtn = document.getElementById('uploadMoreBtn');
     const errorMessage = document.getElementById('errorMessage');
+
+    // ✅ New: container for displaying uploaded images
+    const uploadedImagesContainer = document.getElementById('uploadedImages');
 
     // Cloudinary configuration
     const cloudName = 'dkwxhr5pr';
@@ -40,12 +43,23 @@ document.addEventListener('DOMContentLoaded', function() {
         (error, result) => {
             if (!error && result && result.event === "success") {
                 console.log('Upload successful:', result.info);
-                
-                // Show success message
+
+                // ✅ Create and display the uploaded image
+                const img = document.createElement('img');
+                img.src = result.info.secure_url;
+                img.alt = 'Uploaded Image';
+                img.style.maxWidth = '200px';
+                img.style.borderRadius = '10px';
+                img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                img.style.margin = '5px';
+
+                uploadedImagesContainer.appendChild(img);
+
+                // ✅ Show success section
                 uploadSection.style.display = 'none';
                 successSection.style.display = 'block';
             }
-            
+
             if (error) {
                 console.error('Upload error:', error);
                 errorMessage.textContent = 'There was an error uploading your photos. Please try again.';
@@ -53,17 +67,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     );
 
-    // Upload button click
-    uploadBtn.addEventListener('click', function() {
-        // Open the Cloudinary Upload Widget
+    // Open the Cloudinary widget on upload button click
+    uploadBtn.addEventListener('click', function () {
         myWidget.open();
     });
 
-    // Upload more button
-    uploadMoreBtn.addEventListener('click', function() {
+    // Re-open upload on "Upload more" button click
+    uploadMoreBtn.addEventListener('click', function () {
         successSection.style.display = 'none';
         uploadSection.style.display = 'block';
-        // Open the widget again
         myWidget.open();
     });
 });
