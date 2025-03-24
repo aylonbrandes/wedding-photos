@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   const addDoc = window.firebaseAddDoc;
   const getDocs = window.firebaseGetDocs;
 
-  // Display a photo in the gallery
+  // Function to display an image in the gallery
   function displayImage(url) {
     const img = document.createElement('img');
     img.src = url;
@@ -24,20 +24,20 @@ document.addEventListener('DOMContentLoaded', async function () {
     gallery.appendChild(img);
   }
 
-  // Load all existing photos on page load
+  // 🔁 Load all saved images on page load
   try {
     const snapshot = await getDocs(collectionRef);
     snapshot.forEach(doc => {
       const data = doc.data();
-      if (data.url) {
+      if (data.url && typeof data.url === "string") {
         displayImage(data.url);
       }
     });
   } catch (err) {
-    console.error("Error loading images:", err);
+    console.error("❌ Error loading images from Firebase:", err);
   }
 
-  // Cloudinary widget
+  // ☁️ Cloudinary Upload Widget
   const cloudName = 'dkwxhr5pr';
   const uploadPreset = 'talandadir';
 
@@ -48,18 +48,26 @@ document.addEventListener('DOMContentLoaded', async function () {
       sources: ['local', 'camera'],
       multiple: true,
       maxFiles: 10,
-      maxFileSize: 10000000
+      maxFileSize: 10000000 // 10MB
     },
     async (error, result) => {
       if (!error && result) {
-        if (result.event === "success") {
+        if (result.event === "success" && result.info && result.info.secure_url) {
           const imageUrl = result.info.secure_url;
-          displayImage(imageUrl);
+          console.log("✅ Upload success, URL:", imageUrl);
 
-          try {
-            await addDoc(collectionRef, { url: imageUrl });
-          } catch (err) {
-            console.error("Failed to save to Firebase:", err);
+          // Validate the URL
+          if (imageUrl.startsWith("https://res.cloudinary.com/")) {
+            displayImage(imageUrl);
+
+            try {
+              await addDoc(collectionRef, { url: imageUrl });
+              console.log("✅ Saved to Firebase");
+            } catch (err) {
+              console.error("❌ Failed to save to Firebase:", err);
+            }
+          } else {
+            console.warn("⚠️ Invalid image URL:", imageUrl);
           }
         }
 
@@ -70,17 +78,20 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
 
       if (error) {
-        console.error("Upload error:", error);
+        console.error("❌ Upload error:", error);
         errorMessage.textContent = "שגיאה בהעלאה. נסו שוב.";
       }
     }
   );
 
+  // Upload button opens the widget
   uploadBtn.addEventListener('click', () => myWidget.open());
 
+  // Upload more button
   uploadMoreBtn.addEventListener('click', () => {
     successSection.style.display = 'none';
     uploadSection.style.display = 'block';
     myWidget.open();
   });
 });
+
