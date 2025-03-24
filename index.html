@@ -1,105 +1,92 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💍 אדיר & טל</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💍 אדיר & טל</title>
+  <link rel="stylesheet" href="styles.css" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet"
+  />
 
-    <!-- Cloudinary Upload Widget Script -->
-    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+  <!-- Cloudinary Upload Widget -->
+  <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
 </head>
 <body>
-    <!-- Hero Section -->
-    <div class="hero">  
-        <div class="hero-content">
-            <h1>💍 Tal & Adir</h1>
-            <div class="divider"></div>
-            <p class="date">04 באפריל, 2025</p>
-        </div>
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>💍 Tal & Adir</h1>
+      <div class="divider"></div>
+      <p class="date">04 באפריל, 2025</p>
     </div>
+  </div>
 
-    <!-- Content Section -->
-    <div class="container">
-        <!-- Couple Photo -->
-        <div class="couple-photo">
-            <img src="PHOTO-2025-03-24-16-47-53.jpg" alt="תמונה">
-        </div>
+  <!-- Gallery Section (Always Visible) -->
+  <section class="gallery-section">
+    <h2 style="text-align: center;">✨ גלריה מהאירוע ✨</h2>
+    <div id="gallery" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px;"></div>
+  </section>
 
-        <!-- Message -->
-        <div class="card">
-            <div class="heart-icon">❤️</div>
-            <h2>תודה שחגגתם איתנו!</h2>
-            <p>
-                נשמח מאוד לראות את הרגעים המיוחדים שתיעדתם במהלך האירוע.  
-                שתפו אותנו בתמונות שלכם בלחיצה על הכפתור.
-            </p>
+  <!-- Upload Section -->
+  <div class="container">
+    <div class="card">
+      <div class="heart-icon">❤️</div>
+      <h2>תודה שחגגתם איתנו!</h2>
+      <p>שתפו אותנו בתמונות שלכם מהאירוע 👇</p>
 
-            <!-- Upload Section -->
-            <div class="upload-section" id="uploadSection">
-                <button class="upload-btn" id="uploadBtn">
-                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                    </svg>
-                    העלאת תמונות
-                </button>
-                <p class="upload-hint">ניתן לבחור מספר תמונות במקביל</p>
-                <p id="errorMessage" class="error-message"></p>
-            </div>
+      <div class="upload-section" id="uploadSection">
+        <button class="upload-btn" id="uploadBtn">
+          העלאת תמונות
+        </button>
+        <p class="upload-hint">ניתן לבחור מספר תמונות במקביל</p>
+        <p id="errorMessage" class="error-message"></p>
+      </div>
 
-            <!-- Success Message (Hidden by default) -->
-            <div class="success-section" id="successSection" style="display: none;">
-                <div class="success-icon">✓</div>
-                <h3>תודה רבה!</h3>
-                <p>התמונות שלך הועלו בהצלחה.</p>
-                <button class="upload-more-btn" id="uploadMoreBtn">העלה תמונות נוספות</button>
-
-                <!-- Uploaded Images Gallery -->
-                <div id="uploadedImages" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;"></div>
-            </div>
-        </div>
+      <div class="success-section" id="successSection" style="display: none;">
+        <div class="success-icon">✓</div>
+        <h3>תודה רבה!</h3>
+        <p>התמונה שלך הועלתה בהצלחה.</p>
+        <button class="upload-more-btn" id="uploadMoreBtn">העלה תמונות נוספות</button>
+      </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>באהבה, טל ואדיר</p>
-        <br>
-        <p>רוצים אותנו באירוע שלכם? צרו קשר </p>
-        <p>054-7294966</p>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <p>באהבה, טל ואדיר</p>
+    <p>רוצים אותנו באירוע שלכם? צרו קשר: 054-7294966</p>
+  </footer>
 
-    <!-- Firebase Setup -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyD63Y_5i07PKn49KExO52AUssTyx7k-zmw",
-            authDomain: "wedding-photo-5e225.firebaseapp.com",
-            projectId: "wedding-photo-5e225",
-            storageBucket: "wedding-photo-5e225.firebasestorage.app",
-            messagingSenderId: "140399627576",
-            appId: "1:140399627576:web:4614e578bf73e883d305cd",
-            measurementId: "G-4RB4VH3RD3"
-        };
+    const firebaseConfig = {
+      apiKey: "AIzaSyD63Y_5i07PKn49KExO52AUssTyx7k-zmw",
+      authDomain: "wedding-photo-5e225.firebaseapp.com",
+      projectId: "wedding-photo-5e225",
+      storageBucket: "wedding-photo-5e225.firebasestorage.app",
+      messagingSenderId: "140399627576",
+      appId: "1:140399627576:web:4614e578bf73e883d305cd",
+      measurementId: "G-4RB4VH3RD3"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        // Expose Firebase functions to window for script.js
-        window.firebaseDB = db;
-        window.firebaseCollection = collection;
-        window.firebaseAddDoc = addDoc;
-        window.firebaseGetDocs = getDocs;
-    </script>
+    // Make Firebase available globally
+    window.firebaseDB = db;
+    window.firebaseCollection = collection;
+    window.firebaseAddDoc = addDoc;
+    window.firebaseGetDocs = getDocs;
+  </script>
 
-    <!-- Your main script -->
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
