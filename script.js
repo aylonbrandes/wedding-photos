@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Cloudinary Upload Widget
     const myWidget = cloudinary.createUploadWidget(
         {
-            cloudName: cloudName,
-            uploadPreset: uploadPreset,
+            cloudName: dkwxhr5pr,
+            uploadPreset: talandadir,
             sources: ['local', 'camera'],
             multiple: true,
             maxFiles: 10,
