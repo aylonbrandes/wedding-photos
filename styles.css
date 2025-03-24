@@ -205,3 +205,26 @@ footer {
         padding: 30px 20px;
     }
 }
+
+/* === Gallery Grid (Instagram Style) === */
+#gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Always 3 columns */
+    gap: 10px;
+    padding: 0 16px;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+#gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Square tiles */
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+#gallery img:hover {
+    transform: scale(1.02);
+}
