@@ -215,8 +215,8 @@ footer {
   padding: 0 16px;
   margin: 20px auto;
   direction: ltr;
-  justify-content: center;     /* ✅ Ensures grid is centered horizontally */
-  align-items: center;         /* Optional for vertical alignment */
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -233,4 +233,24 @@ footer {
 
 #gallery img:hover {
   transform: scale(1.02);
+}
+
+/* === Share Button Styles === */
+#gallery button {
+  font-size: 1.2rem;
+  margin-top: 6px;
+  background: none;
+  border: none;
+  color: #ec4899;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+#gallery button:hover {
+  color: #db2777;
+  transform: scale(1.2);
+}
+
+#gallery button:focus {
+  outline: none;
 }
