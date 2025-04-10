@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       sources: ['local', 'camera'],
       multiple: true,
       maxFiles: 10,
-      maxFileSize: 10000000
+      maxFileSize: 15000000
     },
     async (error, result) => {
       if (!error && result && result.event === "success") {
