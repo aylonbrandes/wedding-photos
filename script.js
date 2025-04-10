@@ -161,6 +161,11 @@ document.addEventListener('DOMContentLoaded', async function () {
           alert("⚠️ הקובץ שאתה מנסה להעלות גדול מידי (מעל 15MB)");
           return;
         }
+
+        if (selectedFiles.length > 10) {
+          alert("⚠️ אפשר להעלות עד 10 קבצים בלבד.");
+          return;
+        }
   
         const formData = new FormData();
         formData.append("file", file);
