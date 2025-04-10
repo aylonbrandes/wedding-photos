@@ -101,8 +101,14 @@
   
     <p><a href="tos.html" target="_blank" style="text-decoration: none;">תנאי שימוש</a></p>
   </footer>
-  
 
+  <div id="loadingBanner" class="loading-popup hidden">
+    <div class="popup-inner">
+      <div class="spinner"></div>
+      <p>מעלה קבצים...</p>
+    </div>
+  </div>
+  
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
@@ -135,6 +141,6 @@
 
   <!-- Your main logic -->
   <script src="script.js"></script>
-  
+
 </body>
 </html>
