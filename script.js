@@ -150,6 +150,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   sendBtn.addEventListener("click", async () => {
     if (!selectedFiles.length) return;
+
+    if (selectedFiles.length > 10) {
+          alert("⚠️ אפשר להעלות עד 10 קבצים בלבד.");
+          return;
+        }
   
     document.getElementById("loadingBanner").classList.remove("hidden");
   
@@ -159,11 +164,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       selectedFiles.map(async (file) => {
         if (file.size > 15 * 1024 * 1024) {
           alert("⚠️ הקובץ שאתה מנסה להעלות גדול מידי (מעל 15MB)");
-          return;
-        }
-
-        if (selectedFiles.length > 10) {
-          alert("⚠️ אפשר להעלות עד 10 קבצים בלבד.");
           return;
         }
   
