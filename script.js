@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     previewContainer.innerHTML = "";
     sendBtn.style.display = "none";
     if (file.size <= 15 * 1024 * 1024)
-    alert("הקבצים הועלו בהצלחה!");
+      alert("הקבצים הועלו בהצלחה!");
   });
 
   // lightbox
