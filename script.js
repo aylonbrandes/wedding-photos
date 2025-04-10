@@ -37,25 +37,31 @@ document.addEventListener('DOMContentLoaded', async function () {
     shareBtn.style.cursor = 'pointer';
 
     shareBtn.onclick = async () => {
-      if (navigator.share) {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const fileName = url.split('/').pop();
+    
+      const file = new File([blob], fileName, { type: blob.type });
+    
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
             title: 'תמונה מהאירוע של טל ואדיר 💍',
             text: 'תראו איזו תמונה יפה!',
-            url: url
+            files: [file]
           });
         } catch (err) {
           console.error('Sharing failed:', err);
         }
       } else {
-        try {
-          await navigator.clipboard.writeText(url);
-          alert("📋 הקישור לתמונה הועתק");
-        } catch (err) {
-          alert("לא ניתן להעתיק את הקישור");
-        }
+        // Fallback: force download
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.click();
       }
     };
+    
 
     container.appendChild(img);
     container.appendChild(shareBtn);
@@ -121,3 +127,85 @@ document.addEventListener('DOMContentLoaded', async function () {
   });
 });
 
+
+
+/// gallery view section
+const gallery = document.getElementById('gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxVideo = document.getElementById('lightbox-video');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const closeBtn = document.querySelector('.close-btn');
+const downloadBtn = document.getElementById('download-btn');
+
+let galleryItems = [];
+let currentIndex = 0;
+
+gallery.addEventListener('click', (e) => {
+  const clicked = e.target;
+  if (clicked.tagName !== 'IMG' && clicked.tagName !== 'VIDEO') return;
+
+  galleryItems = Array.from(document.querySelectorAll('#gallery img, #gallery video'));
+  const index = galleryItems.indexOf(clicked);
+  if (index !== -1) showMedia(index);
+});
+
+function showMedia(index) {
+  const item = galleryItems[index];
+  if (!item) return;
+
+  const src = item.src || item.querySelector('source')?.src;
+  const isVideo = item.tagName.toLowerCase() === 'video';
+
+  lightboxImg.style.display = isVideo ? 'none' : 'block';
+  lightboxVideo.style.display = isVideo ? 'block' : 'none';
+
+  if (isVideo) {
+    lightboxVideo.src = src;
+    lightboxVideo.load();
+  } else {
+    lightboxImg.src = src;
+  }
+
+  downloadBtn.href = src;
+  downloadBtn.setAttribute('download', src.split('/').pop());
+  currentIndex = index;
+  lightbox.classList.remove('hidden');
+}
+
+prevBtn.addEventListener('click', () => {
+  const newIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+  showMedia(newIndex);
+});
+
+nextBtn.addEventListener('click', () => {
+  const newIndex = (currentIndex + 1) % galleryItems.length;
+  showMedia(newIndex);
+});
+
+closeBtn.addEventListener('click', () => {
+  lightbox.classList.add('hidden');
+  lightboxVideo.pause();
+});
+
+downloadBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  fetch(downloadBtn.href)
+    .then(res => res.blob())
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = downloadBtn.getAttribute('download') || 'image.jpg';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+    })
+    .catch(err => {
+      console.error('Download failed:', err);
+      alert('ההורדה נכשלה 😢');
+    });
+});

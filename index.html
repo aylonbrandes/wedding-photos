@@ -22,6 +22,7 @@
 <body>
   <!-- Hero -->
   <div class="hero">
+    <img class="logo" src="logo.png" alt="SnapGiv">
     <div class="hero-content">
       <h1>💍 Tal & Adir</h1>
       <div class="divider"></div>
@@ -34,13 +35,7 @@
   <img
     src="PHOTO-2025-03-24-16-47-53.jpg"
     alt="Tal and Adir"
-    style="
-      width: 100%;
-      max-width: 500px;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    "
+    class="couple-photo"
   />
 </div>
   <!-- Upload Section -->
@@ -73,12 +68,19 @@
 
   <!-- Gallery Section -->
   <section class="gallery-section">
-    <h2 style="text-align: center; margin-top: 40px;">✨ גלריה מהאירוע ✨</h2>
-    <div
-      id="gallery"
-      style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px;"
-    ></div>
+    <h2 id="galleryheader">✨ גלריה מהאירוע ✨</h2>
+    <div id="gallery"></div>
   </section>
+
+  <!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox hidden">
+  <span class="close-btn">&times;</span>
+  <img id="lightbox-img" class="lightbox-media" src="" alt="">
+  <video id="lightbox-video" class="lightbox-media" controls></video>
+  <button id="prev-btn">←</button>
+  <button id="next-btn">→</button>
+  <a id="download-btn" download style="text-decoration: none; justify-content: center;">הורדה ⬇️</a>
+</div>
 
   <!-- Footer -->
   <footer>
@@ -91,6 +93,8 @@
       054-7294966
     </a>
   </p>
+
+  <p><a href="tos.html" target="_blank" style="text-decoration: none;">תנאי שימוש</a></p>
 </footer>
 
 
@@ -126,5 +130,6 @@
 
   <!-- Your main logic -->
   <script src="script.js"></script>
+  
 </body>
 </html>
