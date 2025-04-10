@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       media.controls = true;
       media.style.maxWidth = "100%";
       media.style.borderRadius = "12px";
-      media.setAttribute('data-type', 'video');
     } else {
       media = document.createElement('img');
       media.src = url;
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       media.style.width = '100%';
       media.style.borderRadius = '12px';
       media.style.objectFit = 'cover';
-      media.setAttribute('data-type', 'image');
     }
 
     media.addEventListener('click', () => {
@@ -98,7 +96,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     gallery.appendChild(container);
   }
 
-  customUploadBtn.addEventListener("click", () => fileInput.click());
+  customUploadBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    fileInput.click();
+  });
 
   fileInput.addEventListener("change", () => {
     const files = Array.from(fileInput.files);
@@ -125,6 +126,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         } else {
           media = document.createElement("img");
           media.src = reader.result;
+
+          media.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          });
         }
 
         const removeBtn = document.createElement("button");
@@ -149,7 +155,16 @@ document.addEventListener('DOMContentLoaded', async function () {
   sendBtn.addEventListener("click", async () => {
     if (!selectedFiles.length) return;
 
+    // ✅ הצגת באנר טעינה
+    document.getElementById("loadingBanner").classList.remove("hidden");
+
     for (let file of selectedFiles) {
+      // ✅ בדיקת גודל של כל קובץ בנפרד
+      if (file.size > 15 * 1024 * 1024) {
+        alert("⚠️ הקובץ שאתה מנסה להעלות גדול מידי (מעל 15MB)");
+        continue;
+      }
+
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", uploadPreset);
@@ -182,13 +197,17 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
     }
 
+    // ✅ הסתרת הבאנר
+    document.getElementById("loadingBanner").classList.add("hidden");
+
     selectedFiles = [];
     previewContainer.innerHTML = "";
     sendBtn.style.display = "none";
+    if (file.size <= 15 * 1024 * 1024)
     alert("הקבצים הועלו בהצלחה!");
   });
 
-  // === Lightbox logic ===
+  // lightbox
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxVideo = document.getElementById('lightbox-video');
@@ -256,3 +275,4 @@ document.addEventListener('DOMContentLoaded', async function () {
       });
   });
 });
+
