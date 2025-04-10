@@ -171,7 +171,7 @@ h2 {
 }
 
 .upload-more-btn {
-  background-color: #ec4899;
+  background-color: #f39159;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -183,7 +183,7 @@ h2 {
 }
 
 .upload-more-btn:hover {
-  background-color: #db2777;
+  background-color: #eeaa82;
 }
 
 /* Footer */
