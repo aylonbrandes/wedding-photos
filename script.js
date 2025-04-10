@@ -109,105 +109,103 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   function renderPreviews() {
     previewContainer.innerHTML = "";
-
+  
     selectedFiles.forEach((file, index) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        const item = document.createElement("div");
-        item.classList.add("preview-item");
-
-        let media;
-        if (file.type.startsWith("video")) {
-          media = document.createElement("video");
-          media.src = reader.result;
-          media.controls = true;
-          media.muted = true;
-        } else {
-          media = document.createElement("img");
-          media.src = reader.result;
-
-          media.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          });
-        }
-
-        const removeBtn = document.createElement("button");
-        removeBtn.innerText = "×";
-        removeBtn.classList.add("remove-btn");
-        removeBtn.onclick = () => {
-          selectedFiles.splice(index, 1);
-          renderPreviews();
-        };
-
-        item.appendChild(media);
-        item.appendChild(removeBtn);
-        previewContainer.appendChild(item);
+      const fileURL = URL.createObjectURL(file);
+  
+      const item = document.createElement("div");
+      item.classList.add("preview-item");
+  
+      let media;
+      if (file.type.startsWith("video")) {
+        media = document.createElement("video");
+        media.src = fileURL;
+        media.controls = true;
+        media.muted = true;
+      } else {
+        media = document.createElement("img");
+        media.src = fileURL;
+        media.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+      }
+  
+      const removeBtn = document.createElement("button");
+      removeBtn.innerText = "×";
+      removeBtn.classList.add("remove-btn");
+      removeBtn.onclick = () => {
+        selectedFiles.splice(index, 1);
+        renderPreviews();
       };
-
-      reader.readAsDataURL(file);
+  
+      item.appendChild(media);
+      item.appendChild(removeBtn);
+      previewContainer.appendChild(item);
     });
-
+  
     sendBtn.style.display = selectedFiles.length > 0 ? "inline-block" : "none";
   }
+  
 
   sendBtn.addEventListener("click", async () => {
-  if (!selectedFiles.length) return;
-
-  document.getElementById("loadingBanner").classList.remove("hidden");
-
-  let uploadSuccess = false;
-
-  for (let file of selectedFiles) {
-    if (file.size > 15 * 1024 * 1024) {
-      alert("⚠️ הקובץ שאתה מנסה להעלות גדול מידי (מעל 15MB)");
-      continue;
+    if (!selectedFiles.length) return;
+  
+    document.getElementById("loadingBanner").classList.remove("hidden");
+  
+    let uploadSuccess = false;
+  
+    await Promise.all(
+      selectedFiles.map(async (file) => {
+        if (file.size > 15 * 1024 * 1024) {
+          alert("⚠️ הקובץ שאתה מנסה להעלות גדול מידי (מעל 15MB)");
+          return;
+        }
+  
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", uploadPreset);
+        formData.append("cloud_name", cloudName);
+  
+        const uploadUrl = file.type.startsWith("video")
+          ? `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`
+          : `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  
+        try {
+          const res = await fetch(uploadUrl, {
+            method: "POST",
+            body: formData,
+          });
+  
+          const data = await res.json();
+  
+          if (data.secure_url) {
+            await addDoc(collection, {
+              url: data.secure_url,
+              type: file.type.startsWith("video") ? "video" : "image",
+              createdAt: new Date(),
+            });
+  
+            displayMedia(data.secure_url, file.type.startsWith("video") ? "video" : "image");
+            uploadSuccess = true;
+          }
+        } catch (err) {
+          console.error("Upload error:", err);
+          alert("העלאה נכשלה עבור אחד הקבצים.");
+        }
+      })
+    );
+  
+    document.getElementById("loadingBanner").classList.add("hidden");
+  
+    selectedFiles = [];
+    previewContainer.innerHTML = "";
+    sendBtn.style.display = "none";
+  
+    if (uploadSuccess) {
+      alert("הקבצים הועלו בהצלחה!");
     }
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", uploadPreset);
-    formData.append("cloud_name", cloudName);
-
-    const uploadUrl = file.type.startsWith("video")
-      ? `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`
-      : `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-
-    try {
-      const res = await fetch(uploadUrl, {
-        method: "POST",
-        body: formData
-      });
-
-      const data = await res.json();
-
-      if (data.secure_url) {
-        await addDoc(collection, {
-          url: data.secure_url,
-          type: file.type.startsWith("video") ? "video" : "image",
-          createdAt: new Date()
-        });
-
-        displayMedia(data.secure_url, file.type.startsWith("video") ? "video" : "image");
-        uploadSuccess = true; // ✅ עודכן
-      }
-    } catch (err) {
-      console.error("Upload error:", err);
-      alert("העלאה נכשלה עבור אחד הקבצים.");
-    }
-  }
-
-  document.getElementById("loadingBanner").classList.add("hidden");
-
-  selectedFiles = [];
-  previewContainer.innerHTML = "";
-  sendBtn.style.display = "none";
-
-  if (uploadSuccess) {
-    alert("הקבצים הועלו בהצלחה!");
-  }
-});
+  });
 
 
   // lightbox
