@@ -53,19 +53,26 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     media.addEventListener('click', () => {
-      galleryItems = Array.from(document.querySelectorAll('#gallery img, #gallery video'));
+      galleryItems = Array.from(
+        document.querySelectorAll('#gallery > div > img, #gallery > div > video')
+      );
+      
       const index = galleryItems.indexOf(media);
       if (index !== -1) showMedia(index);
     });
 
     const shareBtn = document.createElement('button');
-    shareBtn.innerHTML = '📤';
-    shareBtn.title = 'שתף';
-    shareBtn.style.marginTop = '5px';
-    shareBtn.style.fontSize = '1.2rem';
-    shareBtn.style.border = 'none';
-    shareBtn.style.background = 'none';
-    shareBtn.style.cursor = 'pointer';
+    shareBtn.className = "share-icon-btn";
+    shareBtn.title = "שתף";
+
+    const iconImg = document.createElement('img');
+    iconImg.src = "share logo.png"; 
+    iconImg.alt = "שתף";
+    iconImg.style.width = "26px";
+    iconImg.style.height = "26px";
+
+    shareBtn.appendChild(iconImg);
+
 
     shareBtn.onclick = async () => {
       const response = await fetch(url);
@@ -223,7 +230,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   const downloadBtn = document.getElementById('download-btn');
 
   function showMedia(index) {
-    galleryItems = Array.from(document.querySelectorAll('#gallery img, #gallery video'));
+    galleryItems = Array.from(
+      document.querySelectorAll('#gallery > div > img, #gallery > div > video')
+    );
+    
     const item = galleryItems[index];
     if (!item) return;
 
@@ -281,4 +291,5 @@ document.addEventListener('DOMContentLoaded', async function () {
       });
   });
 });
+
 
