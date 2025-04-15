@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnapGiv</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet"
+  />
+  
+  <!-- Code addisions -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+
+
+  <!-- Hero -->
+  <div class="hero">
+    <img class="logo" src="logo.png" alt="SnapGiv">
+    <div class="hero-content">
+      <h1>💍 Shoval & Aylon</h1>
+      <div class="divider"></div>
+      <p class="date">26 ביוני, 2025</p>
+    </div>
+  </div>
+
+  <!-- 👩‍❤️‍👨 Couple Photo (Restored) -->
+  <div style="display: flex; justify-content: center; margin-top: 40px;">
+  <img
+    src="https://placehold.co/1000x600"
+    alt="Shoval and Aylon"
+    class="couple-photo"
+  />
+</div>
+  <!-- Upload Section -->
+  <div class="container">
+    <div class="card">
+      <div class="heart-icon">🧡</div>
+      <h2>תודה שחגגתם איתנו!</h2>
+      <p>שתפו אותנו בתמונות שלכם מהאירוע 👇</p>
+
+      <div class="upload-custom">
+        <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display: none;" />
+        <button id="customUploadBtn" class="upload-btn">בחר תמונות או סרטונים</button>
+       
+        <p class="upload-hint">ניתן לבחור ולהעלות מספר קבצים במקביל</p>
+
+        <div id="previewContainer" class="preview-container"></div>
+        <button id="sendBtn" class="upload-more-btn" style="display: none;">שלח</button>
+      </div>
+      
+
+      <div
+        class="success-section"
+        id="successSection"
+        style="display: none; text-align: center;"
+      >
+        <div class="success-icon">✓</div>
+        <h3>תודה רבה!</h3>
+        <p>התמונה שלך הועלתה בהצלחה.</p>
+        <button class="upload-more-btn" id="uploadMoreBtn">
+          העלה תמונות נוספות
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section">
+    <h2 id="galleryheader">✨ גלריה מהאירוע ✨</h2>
+    <div id="gallery"></div>
+  </section>
+
+  <!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox hidden">
+  <span class="close-btn">&times;</span>
+  <img id="lightbox-img" class="lightbox-media" src="" alt="">
+  <video id="lightbox-video" class="lightbox-media" controls></video>
+  <button id="prev-btn">←</button>
+  <button id="next-btn">→</button>
+  <a id="download-btn" download style="text-decoration: none; justify-content: center;">הורדה ⬇️</a>
+</div>
+
+  <!-- Footer -->
+  <footer>
+    <p>באהבה, שובל ואילון</p>
+    <p>
+      רוצים את SnapGiv באירוע שלכם? 
+      צרו קשר:
+      <a href="https://wa.me/972547294966" target="_blank" style="color: #25D366; text-decoration: none;">
+        <i class="fab fa-whatsapp" style="margin-right: 5px;"></i>
+        054-7294966
+      </a>
+    </p>
+    <p><a href="https://www.instagram.com/snapgiv/" style="text-decoration: none;">
+      <i class="fa fa-instagram" style="font-size:18px;color:red"></i> עקבו אחרינו באינסטגרם </a></p>
+  
+    <p><a href="tos.html" target="_blank" style="text-decoration: none;">תנאי שימוש</a></p>
+  </footer>
+
+  <div id="loadingBanner" class="loading-popup hidden">
+    <div class="popup-inner">
+      <div class="spinner"></div>
+      <p>מעלה קבצים...</p>
+    </div>
+  </div>
+  
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD63Y_5i07PKn49KExO52AUssTyx7k-zmw",
+      authDomain: "wedding-photo-5e225.firebaseapp.com",
+      projectId: "wedding-photo-5e225",
+      storageBucket: "wedding-photo-5e225.firebasestorage.app",
+      messagingSenderId: "140399627576",
+      appId: "1:140399627576:web:4614e578bf73e883d305cd",
+      measurementId: "G-4RB4VH3RD3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Make Firebase available to script.js
+    window.firebaseDB = db;
+    window.firebaseCollection = collection;
+    window.firebaseAddDoc = addDoc;
+    window.firebaseGetDocs = getDocs;
+  </script>
+
+  <!-- Your main logic -->
+  <script src="script.js"></script>
+
+</body>
+</html>
