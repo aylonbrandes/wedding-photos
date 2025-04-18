@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   const customUploadBtn = document.getElementById("customUploadBtn");
   const previewContainer = document.getElementById("previewContainer");
   const sendBtn = document.getElementById("sendBtn");
+  const privacyCheck = document.getElementById("privacyCheck");
+  const privacyWrapper = document.getElementById("privacyWrapper");
   const gallery = document.getElementById('gallery');
 
   const db = window.firebaseDB;
@@ -151,7 +153,20 @@ document.addEventListener('DOMContentLoaded', async function () {
       previewContainer.appendChild(item);
     });
   
-    sendBtn.style.display = selectedFiles.length > 0 ? "inline-block" : "none";
+    if (selectedFiles.length > 0) {
+      privacyWrapper.style.display = "block";
+      sendBtn.disabled = !privacyCheck.checked;
+    } else {
+      privacyWrapper.style.display = "none";
+      sendBtn.disabled = true;
+      privacyCheck.checked = false;
+    }
+    
+    privacyCheck.addEventListener("change", () => {
+      sendBtn.disabled = !privacyCheck.checked;
+    });
+    
+    
   }
   
 
