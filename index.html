@@ -50,7 +50,13 @@
         <p class="upload-hint">ניתן לבחור ולהעלות מספר קבצים במקביל</p>
 
         <div id="previewContainer" class="preview-container"></div>
-        <button id="sendBtn" class="upload-more-btn" style="display: none;">שלח</button>
+        <div class="privacy-confirmation" id="privacyWrapper" style="display: none;">
+          <label>
+            <input type="checkbox" id="privacyCheck">
+            מאשר/ת את <a href="tos.html" target="_blank">מדיניות הפרטיות ותנאי השימוש באתר</a>
+          </label>
+          <button id="sendBtn" class="upload-more-btn" disabled>שלח</button>
+        </div>
       </div>
       
 
